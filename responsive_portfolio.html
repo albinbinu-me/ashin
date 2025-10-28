@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Developer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-light: #e2e8f0;
+            --accent-green: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveGrid 20s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(15, 23, 42, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-link {
+            color: var(--text-light) !important;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 100px 0;
+        }
+
+        .hero-content {
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+
+        .profile-img {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 5px solid var(--primary-color);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+            animation: float 3s ease-in-out infinite;
+            object-fit: cover;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Section Styling */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        /* Cards */
+        .custom-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .custom-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+            border-color: var(--primary-color);
+        }
+
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        /* Skills */
+        .skill-item {
+            margin-bottom: 25px;
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .progress {
+            height: 10px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            animation: progressAnimation 2s ease;
+        }
+
+        @keyframes progressAnimation {
+            from { width: 0; }
+        }
+
+        /* GitHub Stats */
+        .github-stats {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 20px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            background: rgba(99, 102, 241, 0.2);
+            transform: scale(1.05);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+
+        .contribution-graph {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(12px, 1fr));
+            gap: 3px;
+            margin-top: 20px;
+        }
+
+        .contribution-day {
+            aspect-ratio: 1;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .contribution-day.level-1 { background: rgba(99, 102, 241, 0.3); }
+        .contribution-day.level-2 { background: rgba(99, 102, 241, 0.5); }
+        .contribution-day.level-3 { background: rgba(99, 102, 241, 0.7); }
+        .contribution-day.level-4 { background: var(--primary-color); }
+
+        /* Spotify Widget */
+        .spotify-widget {
+            background: linear-gradient(135deg, #1db954 0%, #1ed760 100%);
+            border-radius: 15px;
+            padding: 25px;
+            color: white;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(29, 185, 84, 0.3);
+        }
+
+        .spotify-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .music-bars {
+            display: flex;
+            gap: 3px;
+            align-items: flex-end;
+            height: 30px;
+        }
+
+        .bar {
+            width: 4px;
+            background: white;
+            border-radius: 2px;
+            animation: musicBar 0.8s ease-in-out infinite;
+        }
+
+        .bar:nth-child(2) { animation-delay: 0.2s; }
+        .bar:nth-child(3) { animation-delay: 0.4s; }
+        .bar:nth-child(4) { animation-delay: 0.6s; }
+
+        @keyframes musicBar {
+            0%, 100% { height: 8px; }
+            50% { height: 25px; }
+        }
+
+        /* Contact Form */
+        .form-control {
+            background: var(--card-bg);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            color: var(--text-light);
+            padding: 12px 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            background: var(--card-bg);
+            border-color: var(--primary-color);
+            color: var(--text-light);
+            box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            padding: 12px 40px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: var(--card-bg);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            transform: translateY(-5px);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--card-bg);
+            padding: 30px 0;
+            text-align: center;
+            border-top: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .hero-subtitle { font-size: 1.2rem; }
+            .profile-img { width: 200px; height: 200px; }
+            .section-title { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#" id="nav-brand">Portfolio</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#github">GitHub</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-content">
+                    <h1 class="hero-title" id="hero-name">Ashin P</h1>
+                    <p class="hero-subtitle" id="hero-role">UI/UX Designer</p>
+                    <p class="text-muted mb-4" id="hero-description">
+                        Crafting beautiful digital experiences with clean code and creative design. 
+                        Passionate about building innovative solutions that make a difference.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" id="social-github"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link" id="social-linkedin"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link" id="social-twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link" id="social-instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center mt-5 mt-lg-0">
+                    <img src="img.jpg" alt="Profile" class="profile-img" id="profile-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="custom-card">
+                        <div class="icon-box">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h4 id="about-title-1">Background</h4>
+                        <p class="text-muted" id="about-text-1">
+                            With 5+ years of experience in web development, I specialize in creating 
+                            responsive and user-friendly applications using modern technologies.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="custom-card">
+                        <div class="icon-box">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h4 id="about-title-2">Philosophy</h4>
+                        <p class="text-muted" id="about-text-2">
+                            I believe in writing clean, maintainable code and designing intuitive 
+                            interfaces that provide exceptional user experiences.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="custom-card">
+                        <div class="icon-box">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h4 id="about-title-3">Passion</h4>
+                        <p class="text-muted" id="about-text-3">
+                            Continuously learning and exploring new technologies to stay at the 
+                            forefront of web development and design trends.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="custom-card">
+                        <div class="icon-box">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4 id="about-title-4">Collaboration</h4>
+                        <p class="text-muted" id="about-text-4">
+                            Strong team player who thrives in collaborative environments and 
+                            enjoys mentoring junior developers.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Skills & Expertise</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span id="skill-1-name">JavaScript / TypeScript</span>
+                            <span id="skill-1-percent">95%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span id="skill-2-name">React / Next.js</span>
+                            <span id="skill-2-percent">90%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span id="skill-3-name">Node.js / Express</span>
+                            <span id="skill-3-percent">85%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 85%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span id="skill-4-name">UI/UX Design</span>
+                            <span id="skill-4-percent">88%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 88%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span id="skill-5-name">Database (SQL/NoSQL)</span>
+                            <span id="skill-5-percent">82%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 82%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span id="skill-6-name">DevOps / CI/CD</span>
+                            <span id="skill-6-percent">78%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 78%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GitHub Stats Section -->
+    <section id="github">
+        <div class="container">
+            <h2 class="section-title">GitHub Activity</h2>
+            <div class="github-stats">
+                <div class="row">
+                    <div class="col-md-3 col-6">
+                        <div class="stat-box">
+                            <div class="stat-number" id="github-repos">127</div>
+                            <div class="stat-label">Repositories</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stat-box">
+                            <div class="stat-number" id="github-commits">2,456</div>
+                            <div class="stat-label">Commits</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stat-box">
+                            <div class="stat-number" id="github-prs">342</div>
+                            <div class="stat-label">Pull Requests</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="stat-box">
+                            <div class="stat-number" id="github-stars">1,234</div>
+                            <div class="stat-label">Stars Earned</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h5 class="mt-5 mb-3 text-center">Contribution Graph - Last 365 Days</h5>
+                <div class="contribution-graph" id="contribution-graph"></div>
+
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="custom-card">
+                            <h5><i class="fas fa-fire text-warning me-2"></i>Current Streak</h5>
+                            <p class="text-muted mb-0"><span class="stat-number" id="github-streak">47</span> days</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="custom-card">
+                            <h5><i class="fas fa-trophy text-warning me-2"></i>Longest Streak</h5>
+                            <p class="text-muted mb-0"><span class="stat-number" id="github-longest">128</span> days</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spotify Widget -->
+            <div class="spotify-widget">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <i class="fab fa-spotify spotify-icon"></i>
+                        <h5 class="mb-1">Now Playing</h5>
+                        <h4 id="spotify-track">Blinding Lights</h4>
+                        <p class="mb-0 opacity-75" id="spotify-artist">The Weeknd</p>
+                    </div>
+                    <div class="music-bars">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="custom-card">
+                        <form>
+                            <div class="mb-3">
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-control" placeholder="Your Name">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" placeholder="your.email@example.com">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Message</label>
+                                <textarea class="form-control" rows="5" placeholder="Your message here..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-paper-plane me-2"></i>Send Message
+                            </button>
+                        </form>
+                    </div>
+                    <div class="text-center mt-4">
+                        <p class="text-muted" id="contact-email">
+                            <i class="fas fa-envelope me-2"></i>john.doe@example.com
+                        </p>
+                        <p class="text-muted" id="contact-location">
+                            <i class="fas fa-map-marker-alt me-2"></i>San Francisco, CA
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p class="mb-0" id="footer-text">&copy; 2025 Ashin P. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ============================================
+        // EDITABLE VARIABLES - Customize your portfolio here
+        // ============================================
+        
+        const portfolioData = {
+            // Personal Info
+            name: "Ashin P",
+            role: "Full Stack Developer & UI/UX Designer",
+            description: "Crafting beautiful digital experiences with clean code and creative design. Passionate about building innovative solutions that make a difference.",
+            profileImage: "img.jpg",
+            
+            // Social Links
+            social: {
+                github: "https://github.com/johndoe",
+                linkedin: "https://linkedin.com/in/johndoe",
+                twitter: "https://twitter.com/johndoe",
+                instagram: "https://instagram.com/johndoe"
+            },
+            
+            // About Section (4 cards)
+            about: [
+                {
+                    title: "Background",
+                    text: "With 5+ years of experience in web development, I specialize in creating responsive and user-friendly applications using modern technologies."
+                },
+                {
+                    title: "Philosophy",
+                    text: "I believe in writing clean, maintainable code and designing intuitive interfaces that provide exceptional user experiences."
+                },
+                {
+                    title: "Passion",
+                    text: "Continuously learning and exploring new technologies to stay at the forefront of web development and design trends."
+                },
+                {
+                    title: "Collaboration",
+                    text: "Strong team player who thrives in collaborative environments and enjoys mentoring junior developers."
+                }
+            ],
+            
+            // Skills (name and percentage)
+            skills: [
+                { name: "JavaScript / TypeScript", percent: 95 },
+                { name: "React / Next.js", percent: 90 },
+                { name: "Node.js / Express", percent: 85 },
+                { name: "UI/UX Design", percent: 88 },
+                { name: "Database (SQL/NoSQL)", percent: 82 },
+                { name: "DevOps / CI/CD", percent: 78 }
+            ],
+            
+            // GitHub Stats
+            github: {
+                repos: 127,
+                commits: 2456,
+                prs: 342,
+                stars: 1234,
+                currentStreak: 47,
+                longestStreak: 128
+            },
+            
+            // Spotify Currently Playing
+            spotify: {
+                track: "Blinding Lights",
+                artist: "The Weeknd"
+            },
+            
+            // Contact Info
+            contact: {
+                email: "john.doe@example.com",
+                location: "San Francisco, CA"
+            },
+            
+            // Footer
+            footerText: "© 2025 John Doe. All rights reserved."
+        };
+
+        // ============================================
+        // AUTO-POPULATION (Do not edit below)
+        // ============================================
+        
+        // Update page content
+        document.getElementById('nav-brand').textContent = portfolioData.name.split(' ')[0];
+        document.getElementById('hero-name').textContent = portfolioData.name;
+        document.getElementById('hero-role').textContent = portfolioData.role;
+        document.getElementById('hero-description').textContent = portfolioData.description;
+        document.getElementById('profile-image').src = portfolioData.profileImage;
+        
+        // Social links
+        document.getElementById('social-github').href = portfolioData.social.github;
+        document.getElementById('social-linkedin').href = portfolioData.social.linkedin;
+        document.getElementById('social-twitter').href = portfolioData.social.twitter;
+        document.getElementById('social-instagram').href = portfolioData.social.instagram;
+        
+        // About section
+        portfolioData.about.forEach((item, i) => {
+            document.getElementById(`about-title-${i + 1}`).textContent = item.title;
+            document.getElementById(`about-text-${i + 1}`).textContent = item.text;
+        });
+        
+        // Skills
+        portfolioData.skills.forEach((skill, i) => {
+            document.getElementById(`skill-${i + 1}-name`).textContent = skill.name;
+            document.getElementById(`skill-${i + 1}-percent`).textContent = skill.percent + '%';
+        });
+        
+        // GitHub stats
+        document.getElementById('github-repos').textContent = portfolioData.github.repos;
+        document.getElementById('github-commits').textContent = portfolioData.github.commits.toLocaleString();
+        document.getElementById('github-prs').textContent = portfolioData.github.prs;
+        document.getElementById('github-stars').textContent = portfolioData.github.stars.toLocaleString();
+        document.getElementById('github-streak').textContent = portfolioData.github.currentStreak;
+        document.getElementById('github-longest').textContent = portfolioData.github.longestStreak;
+        
+        // Spotify
+        document.getElementById('spotify-track').textContent = portfolioData.spotify.track;
+        document.getElementById('spotify-artist').textContent = portfolioData.spotify.artist;
+        
+        // Contact
+        document.getElementById('contact-email').innerHTML = `<i class="fas fa-envelope me-2"></i>${portfolioData.contact.email}`;
+        document.getElementById('contact-location').innerHTML = `<i class="fas fa-map-marker-alt me-2"></i>${portfolioData.contact.location}`;
+        
+        // Footer
+        document.getElementById('footer-text').textContent = portfolioData.footerText;
+        
+        // Generate contribution graph
+        function generateContributionGraph() {
+            const graph = document.getElementById('contribution-graph');
+            const days = 365;
+            
+            for (let i = 0; i < days; i++) {
+                const day = document.createElement('div');
+                day.className = 'contribution-day';
+                
+                // Random contribution level (0-4)
+                const level = Math.floor(Math.random() * 5);
+                if (level > 0) {
+                    day.classList.add(`level-${level}`);
+                }
+                
+                // Tooltip
+                day.title = `${level} contributions`;
+                
+                graph.appendChild(day);
+            }
+        }
+        
+        generateContributionGraph();
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Close mobile menu if open
+                    const navbarCollapse = document.getElementById('navbarNav');
+                    if (navbarCollapse.classList.contains('show')) {
+                        const bsCollapse = new bootstrap.Collapse(navbarCollapse);
+                        bsCollapse.hide();
+                    }
+                }
+            });
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.3)';
+            } else {
+                navbar.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+            }
+        });
+        
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all cards
+        document.querySelectorAll('.custom-card, .stat-box').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
